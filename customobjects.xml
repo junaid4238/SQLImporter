@@ -1,0 +1,27 @@
+<?xml version = "1.0"?>
+<Objects>
+	<CustomObjects>
+		<fullName>Employee</fullName>
+		<label>Employee</label>
+	</CustomObjects>
+	<CustomObjects>
+		<fullName>Class</fullName>
+		<label>Class</label>
+	</CustomObjects>
+	<CustomObjects>
+		<fullName>Role</fullName>
+		<label>Role</label>
+	</CustomObjects>
+	<CustomObjects>
+		<fullName>Student</fullName>
+		<label>Student</label>
+	</CustomObjects>
+	<CustomObjects>
+		<fullName>Subject</fullName>
+		<label>Subject</label>
+	</CustomObjects>
+	<CustomObjects>
+		<fullName>Contact</fullName>
+		<label>Contact</label>
+	</CustomObjects>
+</Objects>
