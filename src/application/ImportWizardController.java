@@ -46,12 +46,12 @@ public class ImportWizardController {
         
         loadStep1();
     }
-    
+    Step1Controller step1Controller;
     void loadStep1() {
     	try {
 			//paneContent.getChildren().add(FXMLLoader.load(getClass().getResource("/design/step1.fxml")));
-			FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/design/step1.fxml"));
-			loader.setController(new Step1Controller());
+			FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/design/step2.fxml"));
+			loader.setController(new Step2Controller());
 			//firstAnchorPan.getChildren().add(loader.load());
 			paneContent.getChildren().add(loader.load());
 			
@@ -63,32 +63,4 @@ public class ImportWizardController {
     }
     
     
-}
-
-class Step1Controller{
-	@FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
-
-    @FXML // fx:id="listViewObjects"
-    private ListView<String> listViewObjects; // Value injected by FXMLLoader
-    private XMLParsingEngine parsingEngine;
-    
-    public Step1Controller() {
-    	parsingEngine = new XMLParsingEngine();
-    	System.err.println("working step1");
-	}
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
-        assert listViewObjects != null : "fx:id=\"listViewObjects\" was not injected: check your FXML file 'step1.fxml'.";
-        addItemsToList();
-    }
-    
-    void addItemsToList() {
-    	
-    	listViewObjects.getItems().add("Object1");
-    	parsingEngine.parseObjects("customobjects");
-    }
 }
