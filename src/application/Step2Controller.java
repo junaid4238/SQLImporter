@@ -31,7 +31,7 @@ public class Step2Controller {
     
     public Step2Controller() {
     	parsingEngine = new XMLParsingEngine();
-    	System.err.println("working step1");
+    	System.err.println("working step2");
 	}
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
