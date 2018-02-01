@@ -35,10 +35,10 @@ public class CSVEngine {
 		}*/
 		//check csv file valid or not
 			//System.out.println(csvRecord.size());
-		Iterator<String> values = csvRecord.iterator();
+		/*Iterator<String> values = csvRecord.iterator();
 		for (String string : csvRecord) {
 			System.out.println(string);
-		}
+		}*/
 		return csvRecord.iterator();
 		
 		

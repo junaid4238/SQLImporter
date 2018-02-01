@@ -1,6 +1,9 @@
 package application;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -9,6 +12,7 @@ import org.dom4j.Node;
 import com.system.parsingengine.XMLParsingEngine;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -39,19 +43,47 @@ public class Step2Controller {
         assert fxGridPane_Mapping != null : "fx:id=\"fxGridPane_Mapping\" was not injected: check your FXML file 'step2.fxml'.";
         assert tfField4 != null : "fx:id=\"tfField4\" was not injected: check your FXML file 'step2.fxml'.";
         List<Node> parsedFields = parsingEngine.parseFields("employee");
-        setParsedData(parsedFields);
+        try {
+			setParsedData(parsedFields);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
-    void setParsedData(List<Node> parsedNodes) {
+    void setParsedData(List<Node> parsedNodes) throws IOException {
     	int i = 2;
-    	for (Node node : parsedNodes) {
-       	 System.out.println("\nCurrent Element :" + node.getName());	 
-       	 System.out.println(node.selectSingleNode("fullName").getText());
-       	 fxGridPane_Mapping.add(new Label(node.selectSingleNode("fullName").getText()
-       			 +" ("+node.selectSingleNode("label").getText()+")"), 0, i);
-       	 System.out.println(node.selectSingleNode("label").getText());
-       	 i++;
-        }
+    	
     	CSVEngine csvEngine = new CSVEngine();
+    	List<String> headers = new ArrayList<>();
+    	Iterator<String> itr = null;
+		try {
+			itr = csvEngine.readCSVHeaders();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		itr.forEachRemaining(headers :: add);
+    	MappedField[] mappedField = new MappedField[parsedNodes.size()];
+    	String dbFieldFullName;
+    	int j = 0;
+    	for (Node node : parsedNodes) {
+    		dbFieldFullName = node.selectSingleNode("fullName").getText();
+    		mappedField[j] = new MappedField(headers, dbFieldFullName); 
+			
+    		System.out.println("List Size: "+headers.size());
+    		//mappedField = new MappedField(, dbFieldFullName);
+    		
+    		System.out.println("\nCurrent Element :" + node.getName());	 
+       	 	System.out.println(node.selectSingleNode("fullName").getText());
+       	 	
+       	 	fxGridPane_Mapping.add(new Label(node.selectSingleNode("label").getText()
+       	 			+" ("+node.selectSingleNode("fullName").getText()+")"), 0, i);
+	      	fxGridPane_Mapping.add(mappedField[j].getChoiceBox(), 1, i);
+	       	System.out.println(node.selectSingleNode("label").getText());
+	       	i++;
+	       	//break;
+        }
+    	
     }
 }
