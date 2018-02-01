@@ -53,4 +53,12 @@ public class CSVEngine {
 		/*String[] headers = csvFileParser.
 		System.out.println(headers.length);*/
 	}
+	
+	public List<CSVRecord> readFileRecords() throws IOException {
+		Reader in = new FileReader("src/application/objectdata.csv");
+		CSVFormat csvFormate = CSVFormat.DEFAULT.withFirstRecordAsHeader();
+		CSVParser csvFileParser = new CSVParser(in, csvFormate);
+		
+		return csvFileParser.getRecords();
+	}
 }

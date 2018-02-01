@@ -8,16 +8,16 @@ public class MappedField {
 	
 	ChoiceBox<String> choiceBox;
 	String dbLabel;
-	String fileMappedLabel;
+	//String fileMappedLabel;
 	public MappedField(List<String> choice, String dbLabel) {
 		choiceBox = new ChoiceBox<>();
 		choiceBox.getItems().addAll(choice);
-		dbLabel = this.dbLabel;
+		this.dbLabel = dbLabel;
 	}
 	public ChoiceBox<String> getChoiceBox() {
 		return choiceBox;
 	}
-	public void setChoiceBox(ChoiceBox<String> choiceBox) {
+	private void setChoiceBox(ChoiceBox<String> choiceBox) {
 		this.choiceBox = choiceBox;
 	}
 	public String getDBLabel() {
@@ -27,10 +27,7 @@ public class MappedField {
 		this.dbLabel = dbLabel;
 	}
 	public String getFileMappedLabel() {
-		return fileMappedLabel;
-	}
-	public void setFileMappedLabel(String fileMappedLabel) {
-		this.fileMappedLabel = fileMappedLabel;
+		return choiceBox.getSelectionModel().getSelectedItem();
 	}
 
 }

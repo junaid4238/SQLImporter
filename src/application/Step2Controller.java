@@ -3,15 +3,20 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import org.dom4j.Node;
 
+import com.system.dbconfig.DbConfig;
 import com.system.parsingengine.XMLParsingEngine;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -82,8 +87,45 @@ public class Step2Controller {
 	      	fxGridPane_Mapping.add(mappedField[j].getChoiceBox(), 1, i);
 	       	System.out.println(node.selectSingleNode("label").getText());
 	       	i++;
+	       	j++;
 	       	//break;
         }
+    	Button btn = new Button("testing");
+    	fxGridPane_Mapping.add(btn, 3, 1);
+    	btn.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				List<MappedField> list = new ArrayList<>(Arrays.asList(mappedField));
+				list.removeIf((MappedField mp) -> mp.getFileMappedLabel() == null);
+				StringBuilder columns = new StringBuilder();
+				int i = 0;
+				for(MappedField map : list) {
+					System.out.println("DB Field: "+map.getDBLabel());
+					System.out.println("Mapped Field: "+map.getFileMappedLabel());
+						
+					if(i>0)
+						columns.append(",");
+					columns.append(map.getDBLabel());
+					i++;
+				}
+				/*for (MappedField mappedField2 : mappedField) {
+					System.out.println("DB Field: "+mappedField2.getDBLabel());
+					System.out.println("Mapped Field: "+mappedField2.getFileMappedLabel());
+				}*/
+				System.out.println(list.size());
+				System.out.println(columns.toString());
+				DbConfig dbConfig = new DbConfig();
+				
+				dbConfig.insert_into_Object("employee", columns.toString(), "");
+				
+			}
+		});
     	
     }
+    private void prepareColumns() {
+    	
+    }
+    
 }
