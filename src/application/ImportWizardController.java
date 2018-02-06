@@ -50,8 +50,8 @@ public class ImportWizardController {
     void loadStep1() {
     	try {
 			//paneContent.getChildren().add(FXMLLoader.load(getClass().getResource("/design/step1.fxml")));
-			FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/design/step2.fxml"));
-			loader.setController(new Step2Controller());
+			FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/design/step1.fxml"));
+			loader.setController(new Step1Controller());
 			//firstAnchorPan.getChildren().add(loader.load());
 			paneContent.getChildren().add(loader.load());
 			
