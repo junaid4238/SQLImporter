@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.apache.commons.csv.CSVRecord;
 import org.dom4j.Node;
 
 import com.system.dbconfig.DbConfig;
@@ -74,7 +75,7 @@ public class Step2Controller {
     	int j = 0;
     	for (Node node : parsedNodes) {
     		dbFieldFullName = node.selectSingleNode("fullName").getText();
-    		mappedField[j] = new MappedField(headers, dbFieldFullName); 
+    		mappedField[j] = new MappedField(node, headers, dbFieldFullName); 
 			
     		System.out.println("List Size: "+headers.size());
     		//mappedField = new MappedField(, dbFieldFullName);
@@ -82,10 +83,11 @@ public class Step2Controller {
     		System.out.println("\nCurrent Element :" + node.getName());	 
        	 	System.out.println(node.selectSingleNode("fullName").getText());
        	 	
-       	 	fxGridPane_Mapping.add(new Label(node.selectSingleNode("label").getText()
-       	 			+" ("+node.selectSingleNode("fullName").getText()+")"), 0, i);
-	      	fxGridPane_Mapping.add(mappedField[j].getChoiceBox(), 1, i);
-	       	System.out.println(node.selectSingleNode("label").getText());
+//       	 	fxGridPane_Mapping.add(new Label(node.selectSingleNode("label").getText()
+//       	 			+" ("+node.selectSingleNode("fullName").getText()+")"), 0, i);
+	      	fxGridPane_Mapping.add(mappedField[j].getLabelField(), 0, i);
+       	 	fxGridPane_Mapping.add(mappedField[j].getChoiceBox(), 1, i);
+	       //	System.out.println(node.selectSingleNode("label").getText());
 	       	i++;
 	       	j++;
 	       	//break;
@@ -116,9 +118,32 @@ public class Step2Controller {
 				}*/
 				System.out.println(list.size());
 				System.out.println(columns.toString());
-				DbConfig dbConfig = new DbConfig();
 				
-				dbConfig.insert_into_Object("employee", columns.toString(), "");
+				DbConfig dbConfig = new DbConfig();
+				StringBuilder values = new StringBuilder();
+				
+				List<CSVRecord> csvRecords = null;
+				try {
+					csvRecords = csvEngine.readFileRecords();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				for(CSVRecord record : csvRecords) {
+					
+					i = 0;
+					for(MappedField map : list) {
+						map.setValue(record.get(map.getFileMappedLabel()));
+						if(i>0)
+							values.append(",");
+						values.append(map.getValueForQuery());
+						i++;
+					}
+					
+					dbConfig.insert_into_Object("employee", columns.toString(), values.toString());
+					values = null;
+					values = new StringBuilder();
+				}
 				
 			}
 		});
