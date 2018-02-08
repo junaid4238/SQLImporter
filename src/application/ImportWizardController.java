@@ -49,9 +49,29 @@ public class ImportWizardController {
     Step1Controller step1Controller;
     void loadStep1() {
     	try {
+    		step1Controller = new Step1Controller();
+			//paneContent.getChildren().add(FXMLLoader.load(getClass().getResource("/design/step1.fxml")));
+			FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/design/step1.fxml"));
+			loader.setController(step1Controller);
+			//firstAnchorPan.getChildren().add(loader.load());
+			paneContent.getChildren().add(loader.load());
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    Step2Controller step2Controller;
+    void validateStep1() {
+    	
+    }
+    void loadStep2() {
+    	try {
+    		step2Controller = new Step2Controller();
 			//paneContent.getChildren().add(FXMLLoader.load(getClass().getResource("/design/step1.fxml")));
 			FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/design/step2.fxml"));
-			loader.setController(new Step2Controller());
+			loader.setController(step2Controller);
 			//firstAnchorPan.getChildren().add(loader.load());
 			paneContent.getChildren().add(loader.load());
 			
