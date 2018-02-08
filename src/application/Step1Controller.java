@@ -66,6 +66,12 @@ public class Step1Controller{
     
     }
     
+    public String getFXListSelectedItem() {
+    	/*System.err.println(listViewObjects.getSelectionModel().getSelectedIndex());
+    	System.out.println(customObjects.get(listViewObjects.getSelectionModel().getSelectedIndex()).getFullName());
+    	*/
+    	return  customObjects.get(listViewObjects.getSelectionModel().getSelectedIndex()).getFullName();
+    }
     void addItemsToList() {
     	
     	//listViewObjects.getItems().add("Object1");
@@ -77,9 +83,10 @@ public class Step1Controller{
     
     ArrayList<CustomObject> customObjects = new ArrayList<>();
     void setParsedData(List<Node> parsedNodes) {
-    	CustomObject cObject =  new CustomObject();
+    	CustomObject cObject;
     	//int i = 0;
         for (Node node : parsedNodes) {
+        	cObject =  new CustomObject();
 			System.out.println("\nCurrent Element :" + node.getName());	 
 			System.out.println(node.selectSingleNode("fullName").getText());
 			cObject.setFullName(node.selectSingleNode("fullName").getText());
@@ -89,6 +96,9 @@ public class Step1Controller{
 			listViewObjects.getItems().add(cObject.getFullName());
          //  i++;
         }
+        /*for (CustomObject customObject : customObjects) {
+			System.out.println(customObject.getFullName());
+		}*/
     }
     
     

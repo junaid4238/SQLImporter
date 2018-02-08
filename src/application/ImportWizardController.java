@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 
 import com.system.parsingengine.XMLParsingEngine;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -45,6 +47,14 @@ public class ImportWizardController {
         assert btnNext != null : "fx:id=\"btnNext\" was not injected: check your FXML file 'Wizard.fxml'.";
         
         loadStep1();
+        btnNext.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				validateStep1();
+			}
+		});
     }
     Step1Controller step1Controller;
     void loadStep1() {
@@ -64,7 +74,7 @@ public class ImportWizardController {
     }
     Step2Controller step2Controller;
     void validateStep1() {
-    	
+    	System.out.println(step1Controller.getFXListSelectedItem());
     }
     void loadStep2() {
     	try {
