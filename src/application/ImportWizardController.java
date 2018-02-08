@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -52,7 +53,8 @@ public class ImportWizardController {
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
-				validateStep1();
+				System.out.println(validateStep1());
+				loadStep2();
 			}
 		});
     }
@@ -66,31 +68,49 @@ public class ImportWizardController {
 			//firstAnchorPan.getChildren().add(loader.load());
 			paneContent.getChildren().add(loader.load());
 			
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
+    
+    File file;
+    String selectedObject;
     Step2Controller step2Controller;
-    void validateStep1() {
-    	System.out.println(step1Controller.getFXListSelectedItem());
-    }
-    void loadStep2() {
+    Boolean validateStep1() {
+    	file = step1Controller.getFXChoosedFileDir();
+    	selectedObject = step1Controller.getFXListSelectedItem();
+    	
     	try {
-    		step2Controller = new Step2Controller();
-			//paneContent.getChildren().add(FXMLLoader.load(getClass().getResource("/design/step1.fxml")));
-			FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/design/step2.fxml"));
-			loader.setController(step2Controller);
-
-			//firstAnchorPan.getChildren().add(loader.load());
-			paneContent.getChildren().add(loader.load());
-			
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+    		if(file.getAbsolutePath() == null || selectedObject == null)
+        		return false;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return false;
 		}
+    	return true;
+    }
+    
+    void loadStep2() {
+    	System.out.println(validateStep1());
+    	if(validateStep1()) {
+    		try {
+        		step2Controller = new Step2Controller( file, selectedObject);
+    			//paneContent.getChildren().add(FXMLLoader.load(getClass().getResource("/design/step1.fxml")));
+    			FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/design/step2.fxml"));
+    			loader.setController(step2Controller);
+
+    			//firstAnchorPan.getChildren().add(loader.load());
+    			paneContent.getChildren().clear();
+    			paneContent.getChildren().add(loader.load());
+    			
+    			
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}
+    	
     }
     
     

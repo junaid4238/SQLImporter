@@ -1,0 +1,12 @@
+<?xml version = "1.0"?>
+<CustomObject>
+   <fields>
+   		<fullName>Name</fullName>
+   		<type></type>
+   		<label>Class</label>
+   </fields>
+   <listViews>
+        <fullName>AllClasses</fullName>
+        <label>All Classes</label>
+    </listViews>
+</CustomObject>

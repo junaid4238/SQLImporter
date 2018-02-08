@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,6 +24,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Step2Controller.
+ */
 public class Step2Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -39,16 +44,31 @@ public class Step2Controller {
     
     private XMLParsingEngine parsingEngine;
     
-    public Step2Controller() {
+    File file;
+    String seletedObj_NM;
+
+    /**
+     * Instantiates a constructor.
+     *
+     * @param file the csv file
+     * @param seletedObj_NM the name of the object which will be used to parse the XML Metadata file.
+     * 						Consider seletedObj_NM = The metadata file of the object
+     */
+    public Step2Controller(File file, String seletedObj_NM) {
+    	this.file = file;
+    	this.seletedObj_NM = seletedObj_NM;
     	parsingEngine = new XMLParsingEngine();
     	System.err.println("working step2");
 	}
     
+    /**
+     * Initialize.
+     */
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert fxGridPane_Mapping != null : "fx:id=\"fxGridPane_Mapping\" was not injected: check your FXML file 'step2.fxml'.";
         assert tfField4 != null : "fx:id=\"tfField4\" was not injected: check your FXML file 'step2.fxml'.";
-        List<Node> parsedFields = parsingEngine.parseFields("employee");
+        List<Node> parsedFields = parsingEngine.parseFields(seletedObj_NM.toLowerCase());
         try {
 			setParsedData(parsedFields);
 		} catch (IOException e) {
@@ -57,14 +77,20 @@ public class Step2Controller {
 		}
     }
     
-    void setParsedData(List<Node> parsedNodes) throws IOException {
+    /**
+     * Sets the parsed data.
+     *
+     * @param parsedNodes the new parsed data
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    private void setParsedData(List<Node> parsedNodes) throws IOException {
     	int i = 2;
     	
     	CSVEngine csvEngine = new CSVEngine();
     	List<String> headers = new ArrayList<>();
     	Iterator<String> itr = null;
 		try {
-			itr = csvEngine.readCSVHeaders();
+			itr = csvEngine.readCSVHeaders(file.getAbsolutePath());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -124,7 +150,7 @@ public class Step2Controller {
 				
 				List<CSVRecord> csvRecords = null;
 				try {
-					csvRecords = csvEngine.readFileRecords();
+					csvRecords = csvEngine.readFileRecords(file.getAbsolutePath());
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -149,6 +175,11 @@ public class Step2Controller {
 		});
     	
     }
+    
+    
+    /**
+     * Prepare columns.
+     */
     private void prepareColumns() {
     	
     }

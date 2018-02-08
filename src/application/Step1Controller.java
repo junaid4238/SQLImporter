@@ -70,8 +70,15 @@ public class Step1Controller{
     	/*System.err.println(listViewObjects.getSelectionModel().getSelectedIndex());
     	System.out.println(customObjects.get(listViewObjects.getSelectionModel().getSelectedIndex()).getFullName());
     	*/
-    	return  customObjects.get(listViewObjects.getSelectionModel().getSelectedIndex()).getFullName();
+    	int i = listViewObjects.getSelectionModel().getSelectedIndex();
+    	return (i < 0) ? null : customObjects.get(listViewObjects.getSelectionModel().getSelectedIndex()).getFullName();
     }
+    
+    public File getFXChoosedFileDir() {
+    	System.out.println(file);
+    	return file;
+    }
+    
     void addItemsToList() {
     	
     	//listViewObjects.getItems().add("Object1");
@@ -114,14 +121,14 @@ public class Step1Controller{
 		
     	
 	};
-	
-	void addFileChooser() {
+	File file;
+	private void addFileChooser() {
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.getExtensionFilters().add(new ExtensionFilter("CSV File", "*.csv"));
 
     	Stage primaryStage = new Stage();
     	
-    	File file = fileChooser.showOpenDialog(primaryStage);
+    	file = fileChooser.showOpenDialog(primaryStage);
     	System.out.println(file);
     	System.out.println("out of this");
     }
