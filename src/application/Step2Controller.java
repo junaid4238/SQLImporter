@@ -42,15 +42,15 @@ public class Step2Controller {
     @FXML // fx:id="tfField4"
     private TextField tfField4; // Value injected by FXMLLoader
     
-    private XMLParsingEngine parsingEngine;
     
+    private XMLParsingEngine parsingEngine;
     File file;
     String seletedObj_NM;
 
     /**
      * Instantiates a constructor.
      *
-     * @param file the csv file
+     * @param file the CSV file
      * @param seletedObj_NM the name of the object which will be used to parse the XML Metadata file.
      * 						Consider seletedObj_NM = The metadata file of the object
      */
@@ -58,7 +58,6 @@ public class Step2Controller {
     	this.file = file;
     	this.seletedObj_NM = seletedObj_NM;
     	parsingEngine = new XMLParsingEngine();
-    	System.err.println("working step2");
 	}
     
     /**
@@ -78,9 +77,13 @@ public class Step2Controller {
     }
     
     /**
-     * Sets the parsed data.
+     * Sets the XML parsed fields to argument parsedNodes.
+     * 
+     * This method convert the parsed fields into labels and add it to JavaFX GridPane.
+     * 
+     * 
      *
-     * @param parsedNodes the new parsed data
+     * @param parsedNodes the new parsed data 
      * @throws IOException Signals that an I/O exception has occurred.
      */
     private void setParsedData(List<Node> parsedNodes) throws IOException {

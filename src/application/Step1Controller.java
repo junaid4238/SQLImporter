@@ -54,9 +54,9 @@ public class Step1Controller{
         assert listViewObjects != null : "fx:id=\"listViewObjects\" was not injected: check your FXML file 'step1.fxml'.";
         assert fxTextFFileDir != null : "fx:id=\"fxTextFFileDir\" was not injected: check your FXML file 'step1.fxml'.";
         assert fxBtnChooseFile != null : "fx:id=\"fxBtnChooseFile\" was not injected: check your FXML file 'step1.fxml'.";
+        fxTextFFileDir.setEditable(false);
         
         fxBtnChooseFile.setOnAction(event);
-        
 
     	addItemsToList();
 
@@ -131,6 +131,12 @@ public class Step1Controller{
     	file = fileChooser.showOpenDialog(primaryStage);
     	System.out.println(file);
     	System.out.println("out of this");
+    	try {
+    		fxTextFFileDir.setText(file.getAbsolutePath());
+    	} catch (Exception e) {
+			// TODO: handle exception
+		}
+    	
     }
 }
 
