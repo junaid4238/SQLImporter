@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class ImportWizardController {
 
@@ -47,7 +48,17 @@ public class ImportWizardController {
         assert btnBack != null : "fx:id=\"btnBack\" was not injected: check your FXML file 'Wizard.fxml'.";
         assert btnNext != null : "fx:id=\"btnNext\" was not injected: check your FXML file 'Wizard.fxml'.";
         
+        btnCancel.setDisable(true);
         loadStep1();
+        btnBack.setDisable(true);
+        btnBack.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				backToStep1();
+			}
+		});
         btnNext.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -59,14 +70,15 @@ public class ImportWizardController {
 		});
     }
     Step1Controller step1Controller;
+    FXMLLoader step1Loader;
     void loadStep1() {
     	try {
     		step1Controller = new Step1Controller();
 			//paneContent.getChildren().add(FXMLLoader.load(getClass().getResource("/design/step1.fxml")));
-			FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/design/step1.fxml"));
-			loader.setController(step1Controller);
+    		step1Loader = new FXMLLoader(this.getClass().getResource("/design/step1.fxml"));
+    		step1Loader.setController(step1Controller);
 			//firstAnchorPan.getChildren().add(loader.load());
-			paneContent.getChildren().add(loader.load());
+			paneContent.getChildren().add(step1Loader.load());
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -104,13 +116,19 @@ public class ImportWizardController {
     			paneContent.getChildren().clear();
     			paneContent.getChildren().add(loader.load());
     			
-    			
+    			btnBack.setDisable(false);
     		} catch (IOException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
     	}
     	
+    }
+    
+    void backToStep1() {
+    	paneContent.getChildren().clear();
+    	paneContent.getChildren().add(step1Loader.getRoot());
+    	btnBack.setDisable(true);
     }
     
     
